@@ -1,15 +1,12 @@
 package com.quiz.lesson03;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.quiz.lesson02.model.Store;
 import com.quiz.lesson03.bo.RealEstateBO;
 import com.quiz.lesson03.model.RealEstate;
 
@@ -39,10 +36,6 @@ public class Lesson03Quiz01RestController {
 			@RequestParam("price") int price
 			) {
 		
-		Map<String,Integer> condition = new HashMap<>();
-		condition.put("area", area);
-		condition.put("price", price);
-		
-		return realEstateBO.getRealEstateList2(condition);
+		return realEstateBO.getRealEstateList2(area,price);
 	}
 }

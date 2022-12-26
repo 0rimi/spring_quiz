@@ -40,7 +40,7 @@
 			 			
  	</select>
  	
- 	<select id="selectRealEstateList2" parameterType="hashMap" resultType="com.quiz.lesson03.model.RealEstate">
+ 	<select id="selectRealEstateList2" parameterType="map" resultType="com.quiz.lesson03.model.RealEstate">
  		SELECT
  			`id`
 			,`realtorId`
@@ -57,9 +57,60 @@
 			<![CDATA[
         	area >= #{area} and
         	price <= #{price}
-        	]]>
-			 			
+        	and `type` = '매매'
+		order by `createdAt` desc
+        	]]> 			
  	</select>
+ 	
+ 	<insert id="insertRealEstate" parameterType="com.quiz.lesson03.model.RealEstate">
+ 		INSERT INTO `real_estate`
+ 		(
+ 			`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{realtorId}
+ 			,#{address}
+ 			,#{area}
+ 			,#{type}
+ 			,#{price}
+ 			,#{rentPrice}
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
+ 	
+ 	<insert id="insertRealEstateField" parameterType="map">
+ 		INSERT INTO `real_estate`
+ 		(
+ 			`realtorId`
+			,`address`
+			,`area`
+			,`type`
+			,`price`
+			,`rentPrice`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{realtorId}
+ 			,#{address}
+ 			,#{area}
+ 			,#{type}
+ 			,#{price}
+ 			,#{rentPrice}
+ 			,NOW()
+ 			,NOW()
+ 		)
+ 	</insert>
  
  
  </mapper>
