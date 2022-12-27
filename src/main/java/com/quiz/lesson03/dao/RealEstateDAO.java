@@ -34,4 +34,13 @@ public interface RealEstateDAO {
 			@Param("rentPrice") Integer rentPrice
 			);
 	
+	//Quiz03_1
+	public int updateEstateById(
+			@Param("id") int id,
+			@Param("type") String type,
+			@Param("price") int price);
+	
+	//Quiz04_1
+	public void deleteRealEstateById(int id);
+	
 }
