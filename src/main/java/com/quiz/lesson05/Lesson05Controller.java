@@ -5,38 +5,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.quiz.lesson05.bo.WeatherBO;
 import com.quiz.lesson05.model.Member;
+import com.quiz.lesson05.model.Weather;
 
 @RequestMapping("/lesson05")
 @Controller
 public class Lesson05Controller {
-	
+
 	// http://localhost/lesson05/quiz01
 	@GetMapping("/quiz01")
 	public String quiz01() {
 		return "lesson05/quiz01";
 	}
-	
+
 	// http://localhost/lesson05/quiz02
 	@GetMapping("/quiz02")
 	public String quiz02(Model model) {
-		
+
 		List<String> musicRanking = new ArrayList<>();
 		musicRanking.add("D.D.D");
 		musicRanking.add("The Stealer");
 		musicRanking.add("Thrillride");
 		musicRanking.add("Maverick");
 		musicRanking.add("Whisper");
-		
+
 		model.addAttribute("musics", musicRanking);
-		
+
 		/////////////////////////////////////
-		
+
 		List<Map<String, Object>> membership = new ArrayList<>();
 
 		Map<String, Object> member = new HashMap<>();
@@ -73,32 +76,31 @@ public class Lesson05Controller {
 		member.put("grade", "BASIC");
 		member.put("point", 420);
 		membership.add(member);
-		
+
 		model.addAttribute("membership", membership);
-		
+
 		return "lesson05/quiz02";
 	}
-	
+
 	// http://localhost/lesson05/quiz03
 	@GetMapping("/quiz03")
 	public String quiz03(Model model) {
-		
+
 		List<Integer> candidates = new ArrayList<>();
 		candidates.add(263001);
-		candidates.add(173942); 
+		candidates.add(173942);
 		candidates.add(563057);
-		
+
 		int totalCnt = 0;
-		for(int i=0; i<candidates.size(); i++) {
+		for (int i = 0; i < candidates.size(); i++) {
 			totalCnt += candidates.get(i);
 		}
-		
+
 		model.addAttribute("candidates", candidates);
 		model.addAttribute("totalCnt", totalCnt);
-		
-		
+
 		////////////////////////////////////////////
-		
+
 		List<Map<String, Object>> cardBills = new ArrayList<>();
 
 		Map<String, Object> cardBill = new HashMap<>();
@@ -121,16 +123,16 @@ public class Lesson05Controller {
 		cardBill.put("date", "2025-09-20");
 		cardBill.put("installment", "일시불");
 		cardBills.add(cardBill);
-		
+
 		model.addAttribute("cardBills", cardBills);
-		
+
 		return "lesson05/quiz03";
 	}
-	
+
 	// http://localhost/lesson05/quiz04
 	@GetMapping("/quiz04")
 	public String quiz04(Model model) {
-		
+
 		List<Member> members = new ArrayList<>();
 
 		Member member = new Member();
@@ -148,7 +150,7 @@ public class Lesson05Controller {
 		member.setEmail("jh0913@gmail.com");
 		member.setIntroduce("이재현임");
 		members.add(member);
-		
+
 		member = new Member();
 		member.setName("주연");
 		member.setPhoneNumber("010-1234-5678");
@@ -156,7 +158,7 @@ public class Lesson05Controller {
 		member.setNationality("삼국시대 촉한");
 		member.setIntroduce("주연이에요. 저는 재현형님 보다 나이는 많지만 일단 아우입니다.");
 		members.add(member);
-		
+
 		member = new Member();
 		member.setName("선우");
 		member.setPhoneNumber("010-0987-4321");
@@ -180,12 +182,10 @@ public class Lesson05Controller {
 		member.setEmail("yellowbug@naver.com");
 		member.setIntroduce("내 수염 좀 멋있는 듯");
 		members.add(member);
-		
+
 		model.addAttribute("members", members);
-		
+
 		return "lesson05/quiz04";
 	}
-		
-		
 
 }
