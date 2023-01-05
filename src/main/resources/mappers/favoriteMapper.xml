@@ -32,4 +32,13 @@
  			`favorite`
  	</select>
  	
+ 	<select id="existFavoriteByUrl" parameterType="string" resultType="boolean"> <!-- 0이면 false, 이외는 true -->
+ 		SELECT
+ 			count(*)
+ 		FROM
+ 			`favorite`
+ 		WHERE
+ 			`url` = #{url}
+ 	</select>
+ 	
  </mapper>

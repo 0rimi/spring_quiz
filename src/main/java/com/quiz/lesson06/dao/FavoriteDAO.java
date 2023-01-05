@@ -15,4 +15,7 @@ public interface FavoriteDAO {
 	// selectAll
 	public List<Favorite> selectFavoriteList();
 	
+	// duplication
+	public boolean existFavoriteByUrl(String url);
+	
 }

@@ -33,14 +33,62 @@
 		<label for="name">제목</label>
 		<input type="text" id="name" name="name" class="form-control">
 		
-		<label for="url">주소</label>
-		<input type="text" id="url" name="url" class="form-control">
+		<label for="url" class="mt-2">주소</label>
+		<div class="d-flex">
+			<input type="text" id="url" name="url" class="form-control col-11">
+			<button id="urlCheck" type="button" class="btn btn-info ml-1">중복확인</button>
+		</div>			
+		<small id="urlStatus"></small>
 		
 		<input id="add" class="form-control btn btn-success mt-3" type="button" value="추가">
 	</div>
 	
 	<script>
 		$(document).ready(function(){
+			
+			let clickCnt = 0;
+			
+			// 주소중복확인
+			$('#urlCheck').on('click',function(){
+				
+				//console.log('중복확인버튼클릭');
+				console.log("clickCnt"+clickCnt);
+				clickCnt += 2;
+				
+				// 초기화
+				$('#urlStatus').empty();		
+				
+				let url = $('#url').val().trim();
+				
+				// 유효성검사
+				if(url == ''){
+					console.log("url : "+url);
+					$('#urlStatus').append('<span class="text-danger">주소가 비어있습니다.</span>');
+					clickCnt = 0;
+					return;
+				}
+				
+				$.ajax({
+					
+					//request
+					type:"GET"
+					,url:"/lesson06/quiz02/is_duplication"
+					,data:{"url":url}
+					//resoponse
+					,success:function(data){
+						if(data.isDuplication){	/*true면 중복*/
+							console.log('중복');
+							$('#urlStatus').append('<span class="text-danger">중복된 주소입니다.</span>');
+							clickCnt = 0;
+						}
+					},complete:function(){
+						
+					},error:function(e){
+						console.log('실패');
+					}
+					
+				});
+			});
 			
 			$('#add').on('click', function(){
 				
@@ -56,10 +104,17 @@
 					alert('주소를 입력해주세요');
 					return;
 				}
-				/* if(url.includes('http') == false){ //있으면 true
-					alert('유효한 주소(http)를 입력해주세요');
+				// http로 시작하지 않고, https로도 시작하지 않으면 alert
+				if (url.startsWith('http') == false && url.startsWith('https') == false){
+					alert('주소 형식이 잘못 되었습니다.')
 					return;
-				} */
+				}
+				
+				if(clickCnt == 0){
+					console.log("clickCnt"+clickCnt);
+					alert('주소 중복 확인이 필요합니다.');
+					return;
+				}
 				
 				console.log(name);
 				console.log(url);
@@ -73,7 +128,7 @@
 					, data:{"name":name, "url":url}
 					
 					// Response
-					, success:function(data) {
+					, success:function(data) {	// json string > object 
 						console.log(data);
 						// 화면 이동
 						location.href = "/lesson06/quiz01/list";
@@ -86,8 +141,7 @@
 					}
 				});
 				
-			});		
-			
+			});	
 		});
 	</script>
 	
