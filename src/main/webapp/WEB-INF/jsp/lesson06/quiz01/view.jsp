@@ -96,6 +96,15 @@
 					alert('주소 형식이 잘못 되었습니다.')
 					return;
 				}
+				 
+				if($("#availableText").hasClass("d-none") === true) {
+					alert('중복체크를 해주세요.')
+					return;
+				}
+				/* if($("#availableText").is(".d-none") === true) {
+					alert('중복체크를 해주세요.')
+					return;
+				} */
 				
 				console.log(name);
 				console.log(url);
