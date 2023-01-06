@@ -34,6 +34,7 @@
 					<th>No.</th>
 					<th>이름</th>
 					<th>주소</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,10 +43,64 @@
 						<td>${status.count }</td>
 						<td>${favorite.name }</td>
 						<td>${favorite.url }</td>
+						<td>
+							<!-- 1)name + value 속성 삭제 -->
+							<%-- <button class="btn btn-danger" value="${favorite.id}" name="delBtn" type="button">삭제</button> --%>
+							
+							<!-- data를 이용해서 태그에 임시 저장하기 -->
+							<button class="btn btn-danger delBtn" data-favorite-id="${favorite.id}" type="button">삭제</button>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
+	
+	<script>
+		$(document).ready(function(){
+			
+			/* value가 하나인 경우에만 가능
+			$('button[name=delBtn]').on('click',function(e){
+				
+				//let id = $(this).val();
+				//let id = $(this).attr('value');
+				let id = e.target.value;	//target=this
+				console.log('삭제 :'+id);
+				
+			});
+			*/
+			
+			// 태그 : data-favorite-id (대문자 절대 안됨)
+			$('.delBtn').on('click',function(e){
+				
+				let id = $(this).data('favorite-id');
+				console.log('삭제 :'+id);
+				
+				$.ajax({
+					
+					//request
+					type:"delete"
+					,url:"/lesson06/quiz02/delete_favorite"
+					,data:{"id":id}
+				
+					//response
+					,success:function(data){
+						if(data.code==1){
+							console.log("삭제성공 : "+id);
+							location.reload(true); //새로고침
+						}else if(data.code==500){
+							console.log("에러코드 :"+data.code);
+						}
+					},error:function(e){
+						alert("에러"+e)
+					}
+			
+					
+				});
+
+			});
+			
+		});
+	</script>
 </body>
 </html>

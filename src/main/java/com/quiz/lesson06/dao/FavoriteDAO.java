@@ -18,4 +18,6 @@ public interface FavoriteDAO {
 	// duplication
 	public boolean existFavoriteByUrl(String url);
 	
+	// delete
+	public int deleteFavoriteById(int id);
 }

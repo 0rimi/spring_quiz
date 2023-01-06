@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,7 @@ public class Lesson06Controller {
 		return favorite;	//Jackson > json string으로 보냄
 	}
 	
+	// http://localhost/lesson06/quiz01/list
 	@GetMapping("/quiz01/list")
 	public String quiz01_list(Model model) {
 		
@@ -63,5 +65,26 @@ public class Lesson06Controller {
 		
 		return result;
 	}
-
+	
+	// http://localhost/lesson06/quiz02/delete_favorite?id=13 (test)
+	//삭제요청 (ajax)
+	@ResponseBody
+	@DeleteMapping("/quiz02/delete_favorite")
+	public Map<String, Object> delete_favorite(
+			@RequestParam("id") int id){
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		//db delete
+		int row = favoriteBO.deleteFavoriteById(id);
+		if (row>0) {
+			result.put("code", 1);	//성공시 code번호(미리 지정해둔)
+			result.put("result", "성공");
+		}else {
+			result.put("code", 500);
+			result.put("result", "실패");
+		}
+		
+		return result;
+	}
 }

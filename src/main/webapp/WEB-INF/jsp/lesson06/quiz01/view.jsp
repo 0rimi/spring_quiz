@@ -38,7 +38,8 @@
 			<input type="text" id="url" name="url" class="form-control col-11">
 			<button id="urlCheck" type="button" class="btn btn-info ml-1">중복확인</button>
 		</div>			
-		<small id="urlStatus"></small>
+		<small id="urlStatus" class="d-none"><span class="text-danger">중복된 주소입니다.</span></small>
+		<small id="availableText" class="d-none"><span class="text-success">저장 가능한 URL 입니다.</span></small>
 		
 		<input id="add" class="form-control btn btn-success mt-3" type="button" value="추가">
 	</div>
@@ -46,27 +47,10 @@
 	<script>
 		$(document).ready(function(){
 			
-			let clickCnt = 0;
-			
 			// 주소중복확인
 			$('#urlCheck').on('click',function(){
 				
-				//console.log('중복확인버튼클릭');
-				console.log("clickCnt"+clickCnt);
-				clickCnt += 2;
-				
-				// 초기화
-				$('#urlStatus').empty();		
-				
 				let url = $('#url').val().trim();
-				
-				// 유효성검사
-				if(url == ''){
-					console.log("url : "+url);
-					$('#urlStatus').append('<span class="text-danger">주소가 비어있습니다.</span>');
-					clickCnt = 0;
-					return;
-				}
 				
 				$.ajax({
 					
@@ -77,9 +61,12 @@
 					//resoponse
 					,success:function(data){
 						if(data.isDuplication){	/*true면 중복*/
+							$('#availableText').addClass('d-none');
+							$('#urlStatus').removeClass('d-none');
 							console.log('중복');
-							$('#urlStatus').append('<span class="text-danger">중복된 주소입니다.</span>');
-							clickCnt = 0;
+						}else{
+							$('#urlStatus').addClass('d-none');
+							$('#availableText').removeClass('d-none');
 						}
 					},complete:function(){
 						
@@ -107,12 +94,6 @@
 				// http로 시작하지 않고, https로도 시작하지 않으면 alert
 				if (url.startsWith('http') == false && url.startsWith('https') == false){
 					alert('주소 형식이 잘못 되었습니다.')
-					return;
-				}
-				
-				if(clickCnt == 0){
-					console.log("clickCnt"+clickCnt);
-					alert('주소 중복 확인이 필요합니다.');
 					return;
 				}
 				
