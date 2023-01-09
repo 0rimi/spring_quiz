@@ -195,6 +195,7 @@
                    					'상태 : '+data.checkResult.state
                     			);
                     		}else if(data.result == 500){
+                    			alert("예약 내역이 없습니다.");
                     			console.log('조회실패');
                     			console.log('일치정보없음');
                     		}

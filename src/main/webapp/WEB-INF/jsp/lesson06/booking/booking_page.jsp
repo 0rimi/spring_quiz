@@ -126,7 +126,7 @@
 	    			,success:function(data){
 	    				if(data.result > 0){
 	    					alert('예약완료');
-	    		    		location.href="/booking/main";
+	    		    		location.href="/booking/reservation_view";
 	    				}else{
 	    					console.log('에러');
 	    					return;

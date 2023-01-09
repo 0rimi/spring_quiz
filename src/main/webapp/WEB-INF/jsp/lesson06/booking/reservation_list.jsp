@@ -65,6 +65,9 @@
 									<c:when test="${booking.state eq '확정'}">
 										<span class="text-success">${booking.state}</span>
 									</c:when>
+									<c:when test="${booking.state eq '취소'}">
+										<span class="text-danger">${booking.state}</span>
+									</c:when>
 								</c:choose>
 							</td>
 							<td>
